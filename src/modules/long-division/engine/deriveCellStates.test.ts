@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { deriveCellStates } from './deriveCellStates'
 import { computeDivisionHouse } from './computeDivisionHouse'
-import type { CellState } from './types'
 
 describe('deriveCellStates', () => {
   const house = computeDivisionHouse(1248, 6)

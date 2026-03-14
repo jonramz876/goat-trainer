@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest'
 import { generateProblem, FALLBACK_PROBLEMS } from './generateProblem'
-import type { Problem } from './types'
 
 describe('generateProblem', () => {
   describe('Tier 1: 2-digit ÷ 1-digit, no remainder', () => {
