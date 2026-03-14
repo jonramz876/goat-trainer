@@ -1,0 +1,80 @@
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--digit-font-size, 28px);
+  font-weight: 600;
+  color: #2D2A26;
+  position: relative;
+  width: var(--cell-width, 48px);
+  height: var(--cell-height, 56px);
+}
+
+/* Step-type colors */
+.quotient { color: #3B82F6; }
+.multiply { color: #22C55E; }
+.subtract { color: #F97316; }
+.bringdown { color: #A855F7; }
+.dividend { color: #2D2A26; }
+.divisor { color: #2D2A26; }
+
+/* Visual states */
+.hidden { opacity: 0; pointer-events: none; }
+.visible { opacity: 1; }
+.dimmed { opacity: 0.4; }
+.active { opacity: 1; outline: 2px dashed currentColor; animation: pulse 1.5s infinite; }
+.input { opacity: 1; }
+
+.inputField {
+  width: 100%;
+  height: 100%;
+  border: 2px dashed currentColor;
+  background: #FFF8F0;
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: inherit;
+  font-weight: 600;
+  color: inherit;
+  outline: none;
+  border-radius: 4px;
+  caret-color: transparent;
+}
+
+.correct { animation: correctFlash 0.4s ease-out; }
+.wrong { animation: wrongFlash 0.4s ease-out; }
+
+.minus {
+  position: absolute;
+  left: -20px;
+  color: #22C55E;
+  font-size: inherit;
+  font-weight: 600;
+}
+
+@keyframes pulse {
+  0%, 100% { outline-offset: 0px; opacity: 1; }
+  50% { outline-offset: 3px; opacity: 0.8; }
+}
+
+@keyframes correctFlash {
+  0% { background-color: transparent; transform: scale(1); }
+  30% { background-color: #86EFAC; transform: scale(1.1); }
+  100% { background-color: transparent; transform: scale(1); }
+}
+
+@keyframes wrongFlash {
+  0% { background-color: transparent; transform: translateX(0); }
+  20% { background-color: #FCA5A5; transform: translateX(-3px); }
+  40% { transform: translateX(3px); }
+  60% { transform: translateX(-2px); }
+  80% { transform: translateX(1px); }
+  100% { background-color: transparent; transform: translateX(0); }
+}
+
+@keyframes digitReveal {
+  0% { opacity: 0; transform: scale(0.7); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.revealing { animation: digitReveal 0.2s ease-out; }

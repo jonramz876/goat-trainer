@@ -1,0 +1,33 @@
+.houseContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.grid {
+  display: grid;
+  gap: 0;
+  position: relative;
+}
+
+.grid {
+  --cell-width: 48px;
+  --cell-height: 56px;
+  --digit-font-size: 28px;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    --cell-width: 44px;
+    --cell-height: 48px;
+    --digit-font-size: 24px;
+  }
+}
+
+.remainder {
+  color: #F97316;
+  font-size: 18px;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  text-align: center;
+  margin-top: 4px;
+}

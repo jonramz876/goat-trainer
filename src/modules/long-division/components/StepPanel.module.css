@@ -1,0 +1,58 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  width: 100px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #6B6560;
+  transition: all 0.2s ease;
+}
+
+.step.active {
+  color: white;
+  transform: scale(1.05);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.divide { --step-color: #3B82F6; }
+.multiply { --step-color: #22C55E; }
+.subtract { --step-color: #F97316; }
+.bringdown { --step-color: #A855F7; }
+
+.divide .dot { background: #3B82F6; }
+.multiply .dot { background: #22C55E; }
+.subtract .dot { background: #F97316; }
+.bringdown .dot { background: #A855F7; }
+
+.step.active.divide { background: #3B82F6; }
+.step.active.multiply { background: #22C55E; }
+.step.active.subtract { background: #F97316; }
+.step.active.bringdown { background: #A855F7; }
+
+.step.active .dot { background: white; }
+
+.label {
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 12px;
+}
