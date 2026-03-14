@@ -1,0 +1,46 @@
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.prompt {
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px;
+  color: #2D2A26;
+  margin: 0 0 8px 0;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.feedback {
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  color: #6B6560;
+  animation: slideUp 300ms ease-out;
+  margin: 0 0 8px 0;
+}
+
+.hintButton {
+  border: 2px solid #E5DDD0;
+  background: transparent;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  color: #2D2A26;
+  cursor: pointer;
+}
+
+.hintButton:hover {
+  background: #F5F0E8;
+}

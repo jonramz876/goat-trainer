@@ -1,0 +1,37 @@
+.pad {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  padding: 8px;
+}
+
+.key {
+  width: 48px;
+  height: 48px;
+  border: 2px solid #D4C4A8;
+  border-radius: 10px;
+  background: white;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  font-weight: 600;
+  color: #2D2A26;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.1s;
+}
+
+.key:active { background: #F5F0E8; }
+
+.wide { width: 72px; }
+
+.confirm {
+  background: #F59E0B;
+  border-color: #D97706;
+  color: white;
+}
+
+.confirm:active { background: #D97706; }
