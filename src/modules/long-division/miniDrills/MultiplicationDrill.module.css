@@ -1,0 +1,76 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.card {
+  background: white;
+  border-radius: 20px;
+  padding: 40px 32px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
+  text-align: center;
+}
+
+.title {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: #64748B;
+  margin: 0 0 24px;
+}
+
+.question {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  font-size: 36px;
+  color: #1E293B;
+  margin: 0 0 8px;
+}
+
+.inputDisplay {
+  font-family: 'Nunito', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #3B82F6;
+  min-height: 40px;
+  margin: 0 0 16px;
+}
+
+.feedback {
+  font-family: 'Nunito', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  min-height: 28px;
+  margin: 0 0 16px;
+  transition: color 0.2s;
+}
+
+.feedbackCorrect {
+  color: #22C55E;
+}
+
+.feedbackWrong {
+  color: #EF4444;
+}
+
+.progress {
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  color: #94A3B8;
+  margin: 0 0 24px;
+}
+
+.completeMessage {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: #22C55E;
+  margin: 0 0 16px;
+}
