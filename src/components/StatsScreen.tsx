@@ -1,4 +1,5 @@
-import { loadProgress } from '../modules/long-division/state/persistence'
+import { useState } from 'react'
+import { loadProgress, clearProgress } from '../modules/long-division/state/persistence'
 import styles from './StatsScreen.module.css'
 
 interface StatsScreenProps {
@@ -8,7 +9,9 @@ interface StatsScreenProps {
 }
 
 export default function StatsScreen({ childId, childName, onBack }: StatsScreenProps) {
-  const progress = loadProgress(childId)
+  const [cleared, setCleared] = useState(false)
+  const [confirming, setConfirming] = useState(false)
+  const progress = cleared ? loadProgress('__nonexistent__') : loadProgress(childId)
 
   const accuracy = progress.totalAttempted > 0
     ? Math.round((progress.totalCorrect / progress.totalAttempted) * 100)
@@ -59,7 +62,40 @@ export default function StatsScreen({ childId, childName, onBack }: StatsScreenP
         </div>
       </div>
 
-      <button className={styles.backBtn} onClick={onBack}>← Back to Hub</button>
+      <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+        <button className={styles.backBtn} onClick={onBack}>← Back to Hub</button>
+
+        {!confirming ? (
+          <button
+            className={styles.backBtn}
+            style={{ color: '#EF4444' }}
+            onClick={() => setConfirming(true)}
+          >
+            Clear Stats
+          </button>
+        ) : (
+          <span style={{ display: 'flex', gap: 8, alignItems: 'center', fontFamily: 'Nunito, sans-serif', fontSize: 14, color: '#64748B' }}>
+            Are you sure?
+            <button
+              className={styles.backBtn}
+              style={{ color: '#EF4444', fontWeight: 700 }}
+              onClick={() => {
+                clearProgress(childId)
+                setCleared(true)
+                setConfirming(false)
+              }}
+            >
+              Yes, clear
+            </button>
+            <button
+              className={styles.backBtn}
+              onClick={() => setConfirming(false)}
+            >
+              Cancel
+            </button>
+          </span>
+        )}
+      </div>
     </div>
   )
 }

@@ -18,6 +18,7 @@ import FeedbackArea from '../components/FeedbackArea'
 import TierDisplay from '../components/TierDisplay'
 import NumberPad from '../../../components/shared/NumberPad'
 import MultiplicationDrill from '../miniDrills/MultiplicationDrill'
+import { useSound } from '../../../hooks/useSound'
 import styles from './PracticePhase.module.css'
 
 interface PracticePhaseProps {
@@ -29,6 +30,7 @@ interface PracticePhaseProps {
 
 export default function PracticePhase({ state, dispatch, childName, onExit }: PracticePhaseProps) {
   const [feedbackText, setFeedbackText] = useState<string | null>(null)
+  const { playCorrect, playWrong, playBringDown, playTierAdvance, playComplete, muted, toggleMute } = useSound()
 
   // Track problem init to avoid double-dispatch in StrictMode
   const initializingRef = useRef(false)
@@ -62,20 +64,23 @@ export default function PracticePhase({ state, dispatch, childName, onExit }: Pr
     if (!currentStep?.auto) return
 
     const timer = setTimeout(() => {
+      playBringDown()
       dispatch({ type: 'STEP_CORRECT' })
     }, 600)
 
     return () => clearTimeout(timer)
-  }, [state.currentHouseData, state.currentStepIndex, dispatch])
+  }, [state.currentHouseData, state.currentStepIndex, dispatch, playBringDown])
 
-  // Tier advance auto-dismiss after 2s
+  // Tier advance sound + auto-dismiss after 2s
   useEffect(() => {
     if (!state.showingTierAdvance) return
+    playTierAdvance()
     const timer = setTimeout(() => {
       dispatch({ type: 'ADVANCE_TIER' })
       dispatch({ type: 'DISMISS_TIER_ADVANCE' })
     }, 2000)
     return () => clearTimeout(timer)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.showingTierAdvance, dispatch])
 
   // Completion overlay auto-dismiss after 1.5s
@@ -144,14 +149,17 @@ export default function PracticePhase({ state, dispatch, childName, onExit }: Pr
       // We handle it inline here by checking isFirstAttempt before dispatching.
       void isFirstAttempt // acknowledged; reducer does not update stepAccuracy on STEP_CORRECT
 
+      playCorrect()
       dispatch({ type: 'STEP_CORRECT' })
       setFeedbackText(null)
 
       if (isLastStep) {
+        playComplete()
         dispatch({ type: 'PROBLEM_COMPLETE' })
       }
     } else {
       // Wrong answer
+      playWrong()
       dispatch({ type: 'STEP_WRONG' })
 
       let fb = ''
@@ -203,7 +211,10 @@ export default function PracticePhase({ state, dispatch, childName, onExit }: Pr
         <span style={{ fontFamily: 'Quicksand', fontWeight: 700, color: '#64748B' }}>
           {childName}
         </span>
-        <button className={styles.exitButton} onClick={onExit}>Exit</button>
+        <div style={{ display: 'flex', gap: 8 }}>
+          <button className={styles.exitButton} onClick={toggleMute}>{muted ? '🔇' : '🔊'}</button>
+          <button className={styles.exitButton} onClick={onExit}>Exit</button>
+        </div>
       </div>
 
       {/* Step panel */}

@@ -72,6 +72,14 @@ export default function DivisionHouse({
   const currentStep = houseData.steps[currentStepIndex]
   const isMultiDigit = currentStep && currentStep.cells.length > 1 && !currentStep.auto
 
+  // Map each cell in the current step to its index (for distributing inputValue digits)
+  const stepCellIndex = useMemo(() => {
+    if (!isMultiDigit || !currentStep) return new Map<string, number>()
+    const map = new Map<string, number>()
+    currentStep.cells.forEach((c, i) => map.set(`${c.row}-${c.col}`, i))
+    return map
+  }, [isMultiDigit, currentStep])
+
   const gridStyle: React.CSSProperties = {
     gridTemplateColumns: `repeat(${houseData.totalCols}, var(--cell-width, 48px))`,
     gridTemplateRows: `repeat(${houseData.totalRows}, var(--cell-height, 56px))`,
@@ -82,19 +90,25 @@ export default function DivisionHouse({
       <div className={styles.grid} style={gridStyle}>
         {cellStates.map((cell) => {
           const isCurrentInput = cell.state === 'input'
-          const spanCols = isCurrentInput && isMultiDigit ? currentStep.cells.length : undefined
+          const cellKey = `${cell.row}-${cell.col}`
+
+          // For multi-digit steps, give each cell its own digit from inputValue
+          let cellInputValue = isCurrentInput ? inputValue : undefined
+          if (isCurrentInput && isMultiDigit) {
+            const idx = stepCellIndex.get(cellKey) ?? 0
+            cellInputValue = inputValue[idx] ?? ''
+          }
 
           return (
             <Cell
-              key={`${cell.row}-${cell.col}`}
+              key={cellKey}
               row={cell.row}
-              col={isCurrentInput && isMultiDigit ? currentStep.cells[0].col : cell.col}
+              col={cell.col}
               digit={cell.digit}
               type={cell.type}
               state={cell.state}
               showMinus={cell.showMinus}
-              inputValue={isCurrentInput ? inputValue : undefined}
-              spanCols={spanCols}
+              inputValue={cellInputValue}
             />
           )
         })}

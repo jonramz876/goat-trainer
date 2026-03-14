@@ -10,7 +10,6 @@ interface CellProps {
   state: CellState
   showMinus: boolean
   inputValue?: string
-  spanCols?: number
   isRevealing?: boolean
 }
 
@@ -22,7 +21,6 @@ export default function Cell({
   state,
   showMinus,
   inputValue,
-  spanCols,
   isRevealing,
 }: CellProps) {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -35,9 +33,7 @@ export default function Cell({
 
   const gridStyle: React.CSSProperties = {
     gridRow: row + 1,
-    gridColumn: spanCols
-      ? `${col + 1} / span ${spanCols}`
-      : col + 1,
+    gridColumn: col + 1,
   }
 
   const stateClass = styles[state] ?? ''

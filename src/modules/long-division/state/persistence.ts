@@ -27,6 +27,11 @@ export function saveProgress(childId: string, progress: ChildProgress): void {
   localStorage.setItem(key, JSON.stringify(progress))
 }
 
+export function clearProgress(childId: string): void {
+  const key = `${STORAGE_PREFIX}${childId}${MODULE_SUFFIX}`
+  localStorage.removeItem(key)
+}
+
 export function loadProgress(childId: string): ChildProgress {
   const key = `${STORAGE_PREFIX}${childId}${MODULE_SUFFIX}`
   try {

@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import type { Dispatch } from 'react'
 import type { LDState } from '../engine/types'
 import type { LDAction } from '../state/actions'
+import { useSound } from '../../../hooks/useSound'
 import Screen1_WhatIsDivision from './Screen1_WhatIsDivision'
 import Screen2_DivisionHouse from './Screen2_DivisionHouse'
 import Screen3_FourSteps from './Screen3_FourSteps'
@@ -17,10 +18,25 @@ interface LessonPhaseProps {
   state: LDState
   dispatch: Dispatch<LDAction>
   childName: string
+  onExit: () => void
 }
 
-export default function LessonPhase({ state, dispatch, childName }: LessonPhaseProps) {
+export default function LessonPhase({ state, dispatch, childName, onExit }: LessonPhaseProps) {
   const [nextReady, setNextReady] = useState(false)
+  const { playCorrect, playWrong } = useSound()
+
+  // Play sounds on lesson interaction results
+  const prevAttempts = useRef(state.lessonInputAttempts)
+  const prevComplete = useRef(state.lessonInteractionComplete)
+  useEffect(() => {
+    if (state.lessonInteractionComplete && !prevComplete.current) {
+      playCorrect()
+    } else if (state.lessonInputAttempts > prevAttempts.current && !state.lessonInteractionComplete) {
+      playWrong()
+    }
+    prevAttempts.current = state.lessonInputAttempts
+    prevComplete.current = state.lessonInteractionComplete
+  }, [state.lessonInputAttempts, state.lessonInteractionComplete, playCorrect, playWrong])
 
   // 800ms pacing delay after interaction completes
   useEffect(() => {
@@ -66,6 +82,28 @@ export default function LessonPhase({ state, dispatch, childName }: LessonPhaseP
 
   return (
     <div className={styles.lessonLayout}>
+      {/* Back button */}
+      <button
+        onClick={onExit}
+        style={{
+          position: 'absolute',
+          top: 12,
+          right: 16,
+          background: 'none',
+          border: '2px solid #E5DDD0',
+          borderRadius: 10,
+          padding: '4px 14px',
+          fontFamily: 'Quicksand, sans-serif',
+          fontWeight: 700,
+          fontSize: 14,
+          color: '#64748B',
+          cursor: 'pointer',
+          zIndex: 10,
+        }}
+      >
+        ← Back
+      </button>
+
       {/* Progress dots */}
       <div className={styles.progressBar}>
         {Array.from({ length: TOTAL_SCREENS }, (_, i) => {

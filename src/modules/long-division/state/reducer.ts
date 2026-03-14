@@ -135,14 +135,26 @@ export function ldReducer(state: LDState, action: LDAction): LDState {
     case 'SET_INPUT':
       return { ...state, inputValue: action.value }
 
-    case 'STEP_CORRECT':
+    case 'STEP_CORRECT': {
+      const step = state.currentHouseData?.steps[state.currentStepIndex]
+      const stepType = step?.action as 'divide' | 'multiply' | 'subtract' | undefined
+      const isFirstAttempt = state.currentAttempts === 0
+      const updatedAccuracy = { ...state.stepAccuracy }
+      if (stepType && stepType in updatedAccuracy) {
+        updatedAccuracy[stepType] = {
+          correct: updatedAccuracy[stepType].correct + (isFirstAttempt ? 1 : 0),
+          total: updatedAccuracy[stepType].total + 1,
+        }
+      }
       return {
         ...state,
         currentStepIndex: state.currentStepIndex + 1,
         currentAttempts: 0,
         currentHintLevel: 0,
         inputValue: '',
+        stepAccuracy: updatedAccuracy,
       }
+    }
 
     case 'STEP_WRONG':
       return {

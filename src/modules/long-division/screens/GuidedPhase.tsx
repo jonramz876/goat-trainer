@@ -15,6 +15,7 @@ import DivisionHouse from '../components/DivisionHouse'
 import StepPanel from '../components/StepPanel'
 import FeedbackArea from '../components/FeedbackArea'
 import NumberPad from '../../../components/shared/NumberPad'
+import { useSound } from '../../../hooks/useSound'
 import styles from './GuidedPhase.module.css'
 
 interface GuidedPhaseProps {
@@ -34,6 +35,7 @@ export default function GuidedPhase({ state, dispatch, childName, onExit }: Guid
   const [inputValue, setInputValue] = useState('')
   const [feedbackText, setFeedbackText] = useState<string | null>(null)
   const [hintLevel, setHintLevel] = useState(0)
+  const { playCorrect, playWrong, playBringDown, playComplete, muted, toggleMute } = useSound()
 
   const problemIndex = state.guidedProblemIndex
   const problem = GUIDED_PROBLEMS[problemIndex]
@@ -68,10 +70,11 @@ export default function GuidedPhase({ state, dispatch, childName, onExit }: Guid
   useEffect(() => {
     if (!currentStep?.auto) return
     const timer = setTimeout(() => {
+      playBringDown()
       dispatch({ type: 'GUIDED_INPUT_CORRECT' })
     }, 600)
     return () => clearTimeout(timer)
-  }, [currentStep, dispatch])
+  }, [currentStep, dispatch, playBringDown])
 
   // When all steps in a problem are done, show interstitial
   useEffect(() => {
@@ -114,9 +117,15 @@ export default function GuidedPhase({ state, dispatch, childName, onExit }: Guid
     if (!val) return
 
     if (val === currentStep.correctAnswer) {
+      playCorrect()
       setFeedbackText(null)
+      // Check if this is the last step — play completion sound
+      if (stepIndex >= houseData.steps.length - 1) {
+        playComplete()
+      }
       dispatch({ type: 'GUIDED_INPUT_CORRECT' })
     } else {
+      playWrong()
       dispatch({ type: 'GUIDED_INPUT_WRONG' })
       let fb = ''
       if (currentStep.action === 'divide') {
@@ -165,7 +174,10 @@ export default function GuidedPhase({ state, dispatch, childName, onExit }: Guid
         <span style={{ fontFamily: 'Quicksand', fontWeight: 700, color: '#64748B' }}>
           {childName}
         </span>
-        <button className={styles.exitButton} onClick={onExit}>Exit</button>
+        <div style={{ display: 'flex', gap: 8 }}>
+          <button className={styles.exitButton} onClick={toggleMute}>{muted ? '🔇' : '🔊'}</button>
+          <button className={styles.exitButton} onClick={onExit}>Exit</button>
+        </div>
       </div>
 
       {/* Step panel */}
