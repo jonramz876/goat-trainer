@@ -1,0 +1,42 @@
+:root {
+  --bg-main: #FDF6EC;
+  --text-primary: #2D2A26;
+  --text-secondary: #6B6560;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-main);
+  font-family: 'Nunito', sans-serif;
+  color: var(--text-primary);
+  overflow: hidden;
+}
+
+#root {
+  width: 100vw;
+  height: 100dvh;
+}
+
+.portraitOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #FDF6EC;
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 24px;
+  color: #2D2A26;
+  text-align: center;
+  padding: 40px;
+}
+
+@media (orientation: portrait) {
+  .portraitOverlay {
+    display: flex;
+  }
+}

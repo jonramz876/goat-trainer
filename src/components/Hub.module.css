@@ -1,0 +1,115 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  background: #FDF6EC;
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  background: white;
+  border-bottom: 1px solid #E5DDD0;
+}
+
+.topBarBtn {
+  border: none;
+  background: none;
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #6B6560;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+
+.topBarBtn:hover {
+  background: #F3EDE4;
+}
+
+.topBarTitle {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #2D2A26;
+}
+
+.moduleGrid {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 40px;
+  flex-wrap: wrap;
+}
+
+.moduleCard {
+  width: 200px;
+  height: 160px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.moduleCard:hover {
+  border-color: #F59E0B;
+  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.2);
+  transform: translateY(-2px);
+}
+
+.moduleCard:active {
+  transform: translateY(0);
+}
+
+.moduleCardLocked {
+  width: 200px;
+  height: 160px;
+  background: #F9F6F2;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: not-allowed;
+  border: 2px solid #E5DDD0;
+  opacity: 0.6;
+}
+
+.moduleIcon {
+  font-size: 40px;
+}
+
+.moduleTitle {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #2D2A26;
+  text-align: center;
+}
+
+.moduleTier {
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  color: #6B6560;
+}
+
+.lockedText {
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  color: #9E9790;
+}
