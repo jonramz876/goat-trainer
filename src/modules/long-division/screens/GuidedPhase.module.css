@@ -1,0 +1,106 @@
+.guidedLayout {
+  display: grid;
+  grid-template-columns: 100px 1fr 240px;
+  grid-template-rows: auto 1fr auto;
+  gap: 16px;
+  padding: 16px;
+  height: 100dvh;
+  box-sizing: border-box;
+}
+
+.topBar {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.problemCounter {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: #64748B;
+  background: #F1F5F9;
+  padding: 6px 14px;
+  border-radius: 20px;
+}
+
+.stepPanelArea { grid-column: 1; grid-row: 2; }
+.houseArea { grid-column: 2; grid-row: 2; display: flex; align-items: center; justify-content: center; }
+.feedbackArea { grid-column: 3; grid-row: 2; }
+.padArea { grid-column: 1 / -1; grid-row: 3; }
+
+/* Interstitial overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.interstitialCard {
+  background: white;
+  border-radius: 20px;
+  padding: 40px 48px;
+  text-align: center;
+  max-width: 380px;
+  width: 90%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.interstitialEmoji {
+  font-size: 56px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.interstitialTitle {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  font-size: 26px;
+  color: #1E293B;
+  margin: 0 0 8px;
+}
+
+.interstitialSub {
+  font-family: 'Nunito', sans-serif;
+  font-size: 17px;
+  color: #64748B;
+  margin: 0 0 28px;
+}
+
+.btnPrimary {
+  background: #F59E0B;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 36px;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btnPrimary:hover {
+  background: #D97706;
+}
+
+.exitButton {
+  background: #F1F5F9;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #64748B;
+  cursor: pointer;
+}
+
+.exitButton:hover {
+  background: #E2E8F0;
+}

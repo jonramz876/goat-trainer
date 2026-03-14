@@ -3,6 +3,9 @@ import type { ModuleProps } from '../../types/module'
 import { ldReducer, initialLDState } from './state/reducer'
 import { loadProgress, saveProgress } from './state/persistence'
 import PracticePhase from './screens/PracticePhase'
+import LessonPhase from './screens/LessonPhase'
+import GuidedPhase from './screens/GuidedPhase'
+import SkipGate from './screens/SkipGate'
 
 export default function LongDivisionModule({ childName, childId, onExit }: ModuleProps) {
   const [state, dispatch] = useReducer(ldReducer, initialLDState)
@@ -76,16 +79,21 @@ export default function LongDivisionModule({ childName, childId, onExit }: Modul
   switch (state.phase) {
     case 'lesson':
       return (
-        <div style={{ padding: 32, fontFamily: 'Quicksand, sans-serif' }}>
-          Lesson Phase (Coming in Chunk 5)
-        </div>
+        <LessonPhase
+          state={state}
+          dispatch={dispatch}
+          childName={childName}
+        />
       )
 
     case 'guided':
       return (
-        <div style={{ padding: 32, fontFamily: 'Quicksand, sans-serif' }}>
-          Guided Phase (Coming in Chunk 5)
-        </div>
+        <GuidedPhase
+          state={state}
+          dispatch={dispatch}
+          childName={childName}
+          onExit={onExit}
+        />
       )
 
     case 'practice':
@@ -100,9 +108,10 @@ export default function LongDivisionModule({ childName, childId, onExit }: Modul
 
     case 'skip-gate':
       return (
-        <div style={{ padding: 32, fontFamily: 'Quicksand, sans-serif' }}>
-          Skip Gate (Coming in Chunk 5)
-        </div>
+        <SkipGate
+          state={state}
+          dispatch={dispatch}
+        />
       )
 
     default:
